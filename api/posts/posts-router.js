@@ -10,6 +10,7 @@ const {
 const router = express.Router();
 
 router.get("/", (req, res) => {
+  logger;
   Posts.get()
     .then(posts => {
       res.status(200).json(posts);
@@ -19,9 +20,10 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validatePostId, (req, res) => {
   // do your magic!
   // this needs a middleware to verify post id
+  res.status(200).json(req.post);
 });
 
 router.delete("/:id", (req, res) => {
