@@ -1,5 +1,9 @@
 const express = require("express");
-const { logger, validatePostId, validatePost } = require("../middleware");
+const {
+  logger,
+  validatePostId,
+  validatePost
+} = require("../middleware/middleware");
 
 const router = express.Router();
 
@@ -23,3 +27,5 @@ router.put("/:id", (req, res) => {
 });
 
 // do not forget to export the router
+
+module.exports = router;
