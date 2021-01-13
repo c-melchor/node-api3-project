@@ -1,4 +1,6 @@
 const express = require("express");
+const Posts = require("./posts-model");
+
 const {
   logger,
   validatePostId,
@@ -8,7 +10,13 @@ const {
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  // do your magic!
+  Posts.get()
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "posts not found" });
+    });
 });
 
 router.get("/:id", (req, res) => {
