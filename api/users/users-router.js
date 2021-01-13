@@ -7,13 +7,11 @@ const {
   validateUserId
 } = require("../middleware/middleware");
 
-router.post("/", (req, res) => {
-  // do your magic!
-  // this needs a middleware to check that the request body is valid
+router.post("/", validateUser, (req, res) => {
+  res.status(201).json(req.user);
 });
 
 router.get("/", (req, res) => {
-  // do your magic!
   logger;
   Users.get()
     .then(users => {
@@ -25,8 +23,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", validateUserId, (req, res) => {
-  // do your magic!
-  // this needs a middleware to verify user id
   res.status(200).json(req.user);
 });
 
@@ -35,23 +31,22 @@ router.delete("/:id", (req, res) => {
   // this needs a middleware to verify user id
 });
 
-router.put("/:id", (req, res) => {
-  // do your magic!
+router.put("/:id", validateUserId, validateUser, (req, res) => {
+  res.status(200).json(req.user); // do your magic!
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
 });
 
-router.post("/:id/posts", (req, res) => {
+router.post("/:id/posts", validateUserId, validateUser, (req, res) => {
   // do your magic!
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
+  res.status(201).json(req.user);
 });
 
 router.get("/:id/posts", (req, res) => {
   // do your magic!
   // this needs a middleware to verify user id
 });
-
-// do not forget to export the router
 
 module.exports = router;
