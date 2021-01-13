@@ -14,11 +14,20 @@ router.post("/", (req, res) => {
 
 router.get("/", (req, res) => {
   // do your magic!
+  logger;
+  Users.get()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "user id not found" });
+    });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validateUserId, (req, res) => {
   // do your magic!
   // this needs a middleware to verify user id
+  res.status(200).json(req.user);
 });
 
 router.delete("/:id", (req, res) => {

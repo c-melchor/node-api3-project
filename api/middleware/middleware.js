@@ -10,10 +10,10 @@ function logger(req, res, next) {
 
 async function validateUserId(req, res, next) {
   // do your magic!
-  const validUserId = await Posts.findById(req.params.id);
   try {
-    if (validUserId) {
-      req.validUserId = validUserId;
+    const validUser = await Users.getById(req.params.id);
+    if (validUser) {
+      req.user = validUser;
       next();
     } else {
       res.status(404).json({ errorMessage: "id not found" });
@@ -28,12 +28,10 @@ function validateUser(req, res, next) {
 }
 
 async function validatePostId(req, res, next) {
-  // do your magic!
   try {
-    const validPostId = await Posts.getById(req.params.id);
-    if (validPostId) {
-      req.post = validPostId;
-      // console.log(validPostId);
+    const validPost = await Posts.getById(req.params.id);
+    if (validPost) {
+      req.post = validPost;
       next();
     } else {
       res.status(404).json({ errorMessage: "id not found" });
