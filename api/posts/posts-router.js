@@ -1,22 +1,23 @@
-const express = require('express');
+const express = require("express");
+const { logger, validatePostId, validatePost } = require("../middleware");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', (req, res) => {
-  // do your magic!
-  // this needs a middleware to verify post id
-});
-
-router.delete('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   // do your magic!
   // this needs a middleware to verify post id
 });
 
-router.put('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
+  // do your magic!
+  // this needs a middleware to verify post id
+});
+
+router.put("/:id", (req, res) => {
   // do your magic!
   // this needs a middleware to verify post id
 });
