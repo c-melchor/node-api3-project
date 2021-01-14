@@ -47,7 +47,6 @@ router.delete("/:id", validateUserId, (req, res) => {
 });
 
 router.put("/:id", validateUserId, validateUser, (req, res) => {
-  console.log(req.params.id, req.user);
   Users.update(req.params.id, req.user)
     .then(user => {
       res.status(200).json(user);
@@ -64,9 +63,14 @@ router.post("/:id/posts", validateUserId, validateUser, (req, res) => {
   // res.status(201).json(req.user);
 });
 
-router.get("/:id/posts", (req, res) => {
-  // do your magic!
-  // this needs a middleware to verify user id
+router.get("/:id/posts", validateUserId, (req, res) => {
+  Users.getUserPosts(req.params.id)
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "unable to retrieve user's posts" });
+    });
 });
 
 module.exports = router;
