@@ -3,6 +3,7 @@ const Users = require("./users-model");
 const router = express.Router();
 const {
   logger,
+  validatePost,
   validateUser,
   validateUserId
 } = require("../middleware/middleware");
@@ -33,7 +34,6 @@ router.get("/:id", validateUserId, (req, res) => {
 });
 
 router.delete("/:id", validateUserId, (req, res) => {
-  // console.log(rew.user.id)
   Users.remove(req.user.id)
     .then(user => {
       res.status(200).json(user);
@@ -41,9 +41,6 @@ router.delete("/:id", validateUserId, (req, res) => {
     .catch(() => {
       res.status(500).json({ errorMessage: "unable to remove user" });
     });
-
-  // do your magic!
-  // this needs a middleware to verify user id
 });
 
 router.put("/:id", validateUserId, validateUser, (req, res) => {
@@ -56,11 +53,16 @@ router.put("/:id", validateUserId, validateUser, (req, res) => {
     });
 });
 
-router.post("/:id/posts", validateUserId, validateUser, (req, res) => {
-  // do your magic!
-  // this needs a middleware to verify user id
-  // and another middleware to check that the request body is valid
-  // res.status(201).json(req.user);
+router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
+  console.log("REQ BODY:", req.body);
+  const postInfo = { ...req.body, user_id: req.params.id };
+  Users.insert(postInfo)
+    .then(userPost => {
+      console.log(userPost);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 router.get("/:id/posts", validateUserId, (req, res) => {

@@ -11,6 +11,7 @@ async function validateUserId(req, res, next) {
   try {
     const validUser = await Users.getById(req.params.id);
     if (validUser) {
+      console.log("VALID:", validUser);
       req.user = validUser;
       next();
     } else {
@@ -28,7 +29,7 @@ async function validateUser(req, res, next) {
       req.user = userName;
       next();
     } else {
-      res.status(400).json("message:missing required name field");
+      res.status(400).json("message:missing required field");
     }
   } catch (error) {
     res.status(500).json({ errorMessage: "not able to post user" });
