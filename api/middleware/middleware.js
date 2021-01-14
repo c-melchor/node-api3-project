@@ -42,7 +42,7 @@ async function validatePostId(req, res, next) {
       req.post = validPost;
       next();
     } else {
-      res.status(404).json({ message: "user not found" });
+      res.status(404).json({ message: "Post id not found" });
     }
   } catch (error) {
     res.status(500).json({ message: "problem retrieving user" });

@@ -24,16 +24,20 @@ router.get("/:id", validatePostId, (req, res) => {
   res.status(200).json(req.post);
 });
 
-router.delete("/:id", (req, res) => {
-  // do your magic!
-  // this needs a middleware to verify post id
+router.delete("/:id", validatePostId, (req, res) => {
+  Posts.remove(req.post.id)
+    .then(post => {
+      console.log("post:", post);
+      res.status(200).json(post);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "unable to delete post" });
+    });
 });
 
 router.put("/:id", (req, res) => {
   // do your magic!
   // this needs a middleware to verify post id
 });
-
-// do not forget to export the router
 
 module.exports = router;
