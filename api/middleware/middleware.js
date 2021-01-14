@@ -24,7 +24,6 @@ async function validateUserId(req, res, next) {
 async function validateUser(req, res, next) {
   try {
     const userName = await req.body;
-    console.log(userName, "USERNAME:");
     if (userName.name) {
       req.user = userName;
       next();
@@ -50,8 +49,19 @@ async function validatePostId(req, res, next) {
   }
 }
 
-function validatePost(req, res, next) {
+async function validatePost(req, res, next) {
   // do your magic!
+  try {
+    const validPostFound = await req.body;
+    if (validPostFound.text) {
+      req.post = validPostFound;
+      next();
+    } else {
+      res.status(404).json({ message: "Post id not found" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {
