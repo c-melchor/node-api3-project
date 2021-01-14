@@ -50,7 +50,6 @@ async function validatePostId(req, res, next) {
 }
 
 async function validatePost(req, res, next) {
-  // do your magic!
   try {
     const validPostFound = await req.body;
     if (validPostFound.text) {
