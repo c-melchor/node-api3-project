@@ -23,10 +23,9 @@ async function validateUserId(req, res, next) {
 
 async function validateUser(req, res, next) {
   try {
-    console.log("userName:", req.body);
-    const userName = await Users.insert(req.body);
+    const userName = await req.body;
     if (userName.name) {
-      req.user = userName.name;
+      req.user = userName;
       next();
     } else {
       res.status(400).json("message:missing required name field");

@@ -8,7 +8,13 @@ const {
 } = require("../middleware/middleware");
 
 router.post("/", validateUser, (req, res) => {
-  res.status(201).json(req.user);
+  Users.insert(req.user)
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "did not work" });
+    });
 });
 
 router.get("/", (req, res) => {
@@ -32,16 +38,15 @@ router.delete("/:id", (req, res) => {
 });
 
 router.put("/:id", validateUserId, validateUser, (req, res) => {
-  res.status(200).json(req.user); // do your magic!
-  // this needs a middleware to verify user id
-  // and another middleware to check that the request body is valid
+  console.log(res);
+  // res.status(200).json(req.user);
 });
 
 router.post("/:id/posts", validateUserId, validateUser, (req, res) => {
   // do your magic!
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
-  res.status(201).json(req.user);
+  // res.status(201).json(req.user);
 });
 
 router.get("/:id/posts", (req, res) => {
