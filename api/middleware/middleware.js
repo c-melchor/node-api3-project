@@ -24,6 +24,7 @@ async function validateUserId(req, res, next) {
 async function validateUser(req, res, next) {
   try {
     const userName = await req.body;
+    console.log(userName, "USERNAME:");
     if (userName.name) {
       req.user = userName;
       next();

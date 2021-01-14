@@ -47,8 +47,14 @@ router.delete("/:id", validateUserId, (req, res) => {
 });
 
 router.put("/:id", validateUserId, validateUser, (req, res) => {
-  console.log(res);
-  // res.status(200).json(req.user);
+  console.log(req.params.id, req.user);
+  Users.update(req.params.id, req.user)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "unable to update user" });
+    });
 });
 
 router.post("/:id/posts", validateUserId, validateUser, (req, res) => {
