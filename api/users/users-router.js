@@ -32,7 +32,16 @@ router.get("/:id", validateUserId, (req, res) => {
   res.status(200).json(req.user);
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", validateUserId, (req, res) => {
+  // console.log(rew.user.id)
+  Users.remove(req.user.id)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      res.status(500).json({ errorMessage: "unable to remove user" });
+    });
+
   // do your magic!
   // this needs a middleware to verify user id
 });
