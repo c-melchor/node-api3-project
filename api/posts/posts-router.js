@@ -10,7 +10,6 @@ const {
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  logger;
   Posts.get()
     .then(posts => {
       res.status(200).json(posts);
@@ -36,7 +35,6 @@ router.delete("/:id", validatePostId, (req, res) => {
 });
 
 router.put("/:id", validatePostId, validatePost, (req, res) => {
-  console.log(req.params.id, "body", req.body, req.post);
   Posts.update(req.params.id, req.post)
     .then(post => {
       res.status(200).json(post);

@@ -1,5 +1,6 @@
 const express = require("express");
 const Users = require("./users-model");
+const Posts = require("../posts/posts-model");
 const router = express.Router();
 const {
   logger,
@@ -56,9 +57,9 @@ router.put("/:id", validateUserId, validateUser, (req, res) => {
 router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
   console.log("REQ BODY:", req.body);
   const postInfo = { ...req.body, user_id: req.params.id };
-  Users.insert(postInfo)
+  Posts.insert(postInfo)
     .then(userPost => {
-      console.log(userPost);
+      res.status(201).json(userPost);
     })
     .catch(err => {
       console.log(err);
